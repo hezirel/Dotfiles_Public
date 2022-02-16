@@ -1,0 +1,136 @@
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.config/.task
+
+## Basic config ##
+default.project=inbox
+weekstart=monday
+urgency.uda.priority.L.coefficient=-2
+color=on
+journal.info=off
+defaultwidth=500
+search.case.sensitive=no
+list.all.projects=1
+alias.open=execute echo "Opening Task";taskopen
+alias.o=execute echo "Opening Task";taskopen
+alias.to=execute taskopen -A -n
+alias.n=next
+alias.s=stash
+alias.st=study
+alias.r=reading
+alias.attach=execute '~/Dev/cli_app/taskwarrior/taskopen/scripts/attach_vifm' -t
+#Recurrence config
+
+## Reports customisation ##
+report.notes.columns=id,description
+report.notes.labels=id,description
+report.notes.description=Only show annotations
+
+	## Report:  Next ##
+report.next.labels=ID,Project,tags,scheduled.countdown,Due,until.remaining,Mission,Time
+report.next.sort=due+,id+,
+report.next.filter=status:pending limit:page +READY -BLOCKED -stash -reading project.not:study project.not:reading or (+ACTIVE)
+report.next.project=indented
+report.next.columns=id,project,tags.indicator,scheduled.countdown,due.relative,until.remaining,description.count,totalactivetime
+
+	## Report:  Waiting ##
+report.waiting.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due,until,description.count
+report.waiting.labels=ID,A,Age,D,P,Project,Tags,R,Remaining,Sched,Due,Until,Description
+report.waiting.project=indented
+report.waiting.filter=+WAITING -stash
+
+	## Report:  Completed ##
+report.completed.columns=uuid.short,entry,end,entry.age,depends,project,tags,description
+report.completed.labels=UUID,Created,Completed,Age,Deps,Project,Tags,Description
+
+	## Report:  Time Spent ##
+report.timespent.columns=uuid.short,end,entry.age,project,description,totalactivetime
+report.timespent.labels=UUID,Completed,Age,Project,Description,Time
+report.timespent.sort=end+
+report.timespent.filter=status:completed
+report.timespent.description=List of time spent on each task via totalactivetime
+
+	## Report: Stashed ##
+report.stash.columns=id,project,description.count,totalactivetime
+report.stash.labels=ID,Project,Mission,Time
+report.stash.filter=-COMPLETED and (+stash) and -reading
+
+	## Report:  Study ##
+report.study.description=Study View
+report.study.columns=id,project,description.count,start.relative,totalactivetime
+report.study.labels=ID,Project,Mission,Last,Time
+report.study.filter=(project:study or +study) and -BLOCKED and -COMPLETED
+report.study.project=indented
+report.study.sort=start+
+
+	## Report: Reading ##
+report.reading.columns=id,project,description.count,totalactivetime
+report.reading.labels=ID,Project,Mission,Time
+report.reading.filter=(project:reading or +reading) and -COMPLETED
+## Task active time ##
+uda.totalactivetime.type=duration
+uda.totalactivetime.label=Total active time
+uda.totalactivetime.values=
+
+## Tasksh review attributes ##
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+## Project colors ##
+color.blocked=on gray2
+color.blocking=on black
+color.due=underline
+color.overdue=inverse
+color.project.workflow.shell=rgb040
+color.project.workflow.vim=rgb041
+color.project.workflow.notes=rgb115
+color.project.workflow.rice=rgb145
+color.project.dojo.go=rgb035
+color.project.dojo.js=magenta
+color.project.dojo.git=rgb123
+color.project.dojo.fcc=rgb035 on gray1
+color.project.dojo.devOps=rgb312
+color.project.dojo.backend=rgb522
+color.project.OC=rgb224
+color.project.oth=rgb524
+color.project.dojo.netsec=rgb030 on black
+color.project.self=rgb545
+color.project.self.job=rgb121
+color.project.self.bank=rgb134
+color.project.reading=rgb321
+color.project.writing=rgb331
+color.project.study=rgb532
+color.project.home=rgb405
+color.project.dojo.odin=rgb520
+color.project.dojo.ghlab=rgb125
+color.project.dojo.blockchain=rgb341
+color.project.work.affaren=rgb345 underline
+
+## Task Terminal User Interface ##
+uda.taskwarrior-tui.selection.indicator=❯
+uda.taskwarrior-tui.selection.bold=yes
+uda.taskwarrior-tui.selection.italic=no
+uda.taskwarrior-tui.selection.dim=no
+uda.taskwarrior-tui.selection.blink=no
+uda.taskwarrior-tui.mark.indicator=✔
+uda.taskwarrior-tui.unmark.indicator= 
+uda.taskwarrior-tui.mark-selection.indicator=⦿
+uda.taskwarrior-tui.unmark-selection.indicator=⦾
+uda.taskwarrior-tui.calendar.months-per-row=4
+uda.taskwarrior-tui.task-report.jump-on-task-add=true
+uda.taskwarrior-tui.shortcuts.9=.config/taskwarrior-tui/shortcut/twuiopen.sh
+uda.taskwarrior-tui.keyconfig.shortcut9=O
+uda.blocks.type=string
+uda.blocks.label=Blocks
+news.version=2.6.0
+context.code.read=project:dojo or project:OC
+context.code.write=project:dojo or project:OC
+context.opti.read=project:workflow
+context.opti.write=project:workflow
+context.study.read=project:study or project:reading
+context.study.write=project:study or project:reading
